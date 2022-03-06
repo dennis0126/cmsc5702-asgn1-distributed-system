@@ -2,12 +2,12 @@
   "name": "server_bookdepository",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "lint": "eslint"
   },
   "author": "",
@@ -18,8 +18,9 @@
     "prettier": "^2.5.1"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.3",
-    "request": "^2.88.2"
+    "numeral": "^2.0.6"
   }
 }
