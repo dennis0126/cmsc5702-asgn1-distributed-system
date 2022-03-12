@@ -1,6 +1,7 @@
 import express from "express";
-import fetchBookList from "./externalData/fetchBookList.js";
-import fetchBook from "./externalData/fetchBook.js";
+import fetchBookList from "./externalData/bookDepository/fetchBookList.js";
+import fetchBookBookDepository from "./externalData/bookDepository/fetchBook.js";
+import fetchBookElephants from "./externalData/elephants/fetchBook.js";
 
 const PORT = 8000;
 const app = express();
@@ -17,8 +18,24 @@ app.get("/books/list", async (req, res) => {
 
 app.get("/books/:isbn", async (req, res) => {
   const isbn = req.params.isbn;
-  const book = await fetchBook(isbn);
-  res.send(book);
+  const bookBookDepository = await fetchBookBookDepository(isbn);
+  const bookElephants = await fetchBookElephants(isbn);
+  const book = { ...bookBookDepository };
+  book.sources = [];
+  book.sources.push({
+    source: "Book Depository",
+    url: bookBookDepository.url,
+    currency: bookBookDepository.currency,
+    price: bookBookDepository.price,
+  });
+  book.sources.push({
+    source: "Elephants",
+    url: bookElephants.url,
+    currency: bookElephants.currency,
+    price: bookElephants.price,
+  });
+  const { url, currency, price, ...bookOutput } = book;
+  res.send(bookOutput);
 });
 
 //start the server

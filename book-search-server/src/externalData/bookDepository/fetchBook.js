@@ -1,6 +1,6 @@
 import axios from "axios";
 import cheerio from "cheerio";
-import parsePriceStr from "./helpers/parsePriceStr.js";
+import parsePriceStr from "../helpers/parsePriceStr.js";
 
 const fetchBook = async (isbn) => {
   const url = `https://www.bookdepository.com/search?searchTerm=${isbn}&search=Find+book`;
@@ -20,8 +20,9 @@ const extractBookDataFromHTML = (html) => {
   const excerptEle = $(".item-excerpt");
   excerptEle.find("a").remove();
   const excerpt = excerptEle.text().trim();
-  const fullStar = $(".stars .star.full-star").toArray().length;
-  const halfStar = $(".stars .star.half-star").toArray().length;
+  const ratingContainer = $(".rating-wrap")[0];
+  const fullStar = $(ratingContainer).find(".stars .star.full-star").toArray().length;
+  const halfStar = $(ratingContainer).find(".stars .star.half-star").toArray().length;
   const rating = fullStar + 0.5 * halfStar;
   const datePublished = $("[itemprop=datePublished]").text();
   const publisher = $("[itemprop=publisher]").attr("itemscope");

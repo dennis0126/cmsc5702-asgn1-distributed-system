@@ -1,6 +1,6 @@
 import axios from "axios";
 import cheerio from "cheerio";
-import parsePriceStr from "./helpers/parsePriceStr.js";
+import parsePriceStr from "../helpers/parsePriceStr.js";
 
 const fetchBookList = async (keyword = "") => {
   // get search result from Book Depository (searchLang: English, format: softback, availability: in stock)
