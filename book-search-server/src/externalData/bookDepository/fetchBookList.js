@@ -17,7 +17,7 @@ const extractBookListFromHTML = (html) => {
   $(".book-item").each((index, ele) => {
     const name = $(ele).find("meta[itemprop=name]").attr("content");
     const isbn = $(ele).find("meta[itemprop=isbn]").attr("content");
-    const imgPath = $(ele).find(".item-img img").attr("src");
+    const imgPath = $(ele).find(".item-img img").attr("data-lazy");
     const url = $(ele).find(".item-img a").attr("href");
     const author = $(ele).find(".author").text().trim();
     const fullStar = $(ele).find(".stars .star.full-star").toArray().length;
