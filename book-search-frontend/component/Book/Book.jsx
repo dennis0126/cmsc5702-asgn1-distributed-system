@@ -13,10 +13,6 @@ const Book = ({ book }) => {
       <Rating rating={book.rating} />
       <div className={styles.datePublished}>{book.datePublished}</div>
       <div className={styles.author}>By {book.author}</div>
-      <div className={styles.price}>
-        {book.currency}
-        {book.price}
-      </div>
     </div>
   );
 };
