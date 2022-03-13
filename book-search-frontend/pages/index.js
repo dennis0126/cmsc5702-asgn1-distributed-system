@@ -16,11 +16,15 @@ export default function Home({ searchKeyword, bookList }) {
       <div className={styles.container}>
         <div className={styles.innerContainer}>
           <h3>{searchKeyword ? `Search result of "${searchKeyword}"` : "Recommended books"}</h3>
-          <div className={styles.bookList}>
-            {bookList.map((book) => (
-              <Book key={book.isbn} book={book} />
-            ))}
-          </div>
+          {bookList.length > 0 ? (
+            <div className={styles.bookList}>
+              {bookList.map((book) => (
+                <Book key={book.isbn} book={book} />
+              ))}
+            </div>
+          ) : (
+            <div>No Book satisfies your search. Please try another keyword.</div>
+          )}
         </div>
       </div>
     </div>
