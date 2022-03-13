@@ -1,0 +1,17 @@
+.container {
+    background: #EEE;
+}
+
+.innerContainer {
+    background: white;
+    margin: auto;
+    max-width: 1200px;
+    padding: 50px 30px;
+}
+
+.bookList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 50px 20px;
+}
