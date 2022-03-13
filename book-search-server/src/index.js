@@ -19,12 +19,12 @@ app.get("/books/list", async (req, res) => {
 
 app.get("/books/:isbn", async (req, res) => {
   const isbn = req.params.isbn;
-  const [bookBookDepository, bookElephants, bookAmazon] = await Promise.all([
-    fetchBookBookDepository(isbn),
-    fetchBookElephants(isbn),
-    fetchBookAmazon(isbn),
-  ]);
-  // const bookBookDepository = await fetchBookBookDepository(isbn);
+  const bookBookDepository = await fetchBookBookDepository(isbn);
+  console.log("name", bookBookDepository.name);
+  if (!bookBookDepository.name) {
+    return res.send({});
+  }
+  const [bookElephants, bookAmazon] = await Promise.all([fetchBookElephants(isbn), fetchBookAmazon(isbn)]);
   // const bookElephants = await fetchBookElephants(isbn);
   // const bookAmazon = await fetchBookAmazon(isbn);
   const book = { ...bookBookDepository };

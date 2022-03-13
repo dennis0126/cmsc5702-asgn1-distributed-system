@@ -13,6 +13,9 @@ const fetchBook = async (isbn) => {
 const extractBookDataFromHTML = (html) => {
   const $ = cheerio.load(html);
   const name = $("h1[itemprop=name]").text();
+  if (!name) {
+    return {};
+  }
   const isbn = $("[itemprop=isbn]").text();
   const imgPath = $("[itemprop=image]").attr("src");
   const url = "https://bookdepository.com" + $("[itemprop=url]").attr("content");
@@ -58,7 +61,7 @@ const getRecommendedBookList = ($, bookListEle) => {
   bookListEle.each((idx, ele) => {
     const name = $(ele).find(".title").text().trim();
     const isbn = $(ele).find("[data-isbn]").attr("data-isbn");
-    const imgPath = $(ele).find(".item-img img").attr("src");
+    const imgPath = $(ele).find(".item-img img").attr("data-lazy");
     const author = $(ele).find(".author").text().trim();
     const fullStar = $(ele).find(".stars .star.full-star").toArray().length;
     const halfStar = $(ele).find(".stars .star.half-star").toArray().length;
