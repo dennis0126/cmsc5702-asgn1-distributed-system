@@ -4,18 +4,22 @@ import parsePriceStr from "../helpers/parsePriceStr.js";
 
 const fetchBook = async (isbn) => {
   const url = `https://www.amazon.com/s?k=${isbn}&i=stripbooks&language=en_US&crid=16LS9HIXTSUP4&sprefix=9780802412706%2Caps%2C245&ref=nb_sb_noss`;
-
-  const res = await axios.get(url);
-  const html = res.data;
-  const $ = cheerio.load(html);
-  const itemPageUrl = $("[data-component-type=s-search-result]").find(".a-link-normal").attr("href");
-  const fullItemPageUrl = `https://www.amazon.com${itemPageUrl}`;
-  const res2 = await axios.get(fullItemPageUrl, {
-    headers: {
-      Cookie: "i18n-prefs=HKD;",
-    },
-  });
-  return { ...extractBookDataFromHTML(res2.data), url: fullItemPageUrl };
+  try {
+    const res = await axios.get(url);
+    const html = res.data;
+    const $ = cheerio.load(html);
+    const itemPageUrl = $("[data-component-type=s-search-result]").find(".a-link-normal").attr("href");
+    console.log(itemPageUrl);
+    const fullItemPageUrl = `https://www.amazon.com${itemPageUrl}`;
+    const res2 = await axios.get(fullItemPageUrl, {
+      headers: {
+        Cookie: "i18n-prefs=HKD;",
+      },
+    });
+    return { ...extractBookDataFromHTML(res2.data), url: fullItemPageUrl };
+  } catch (e) {
+    return null;
+  }
 };
 
 const extractBookDataFromHTML = (html) => {

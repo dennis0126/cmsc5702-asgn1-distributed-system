@@ -20,7 +20,6 @@ app.get("/books/list", async (req, res) => {
 app.get("/books/:isbn", async (req, res) => {
   const isbn = req.params.isbn;
   const bookBookDepository = await fetchBookBookDepository(isbn);
-  console.log("name", bookBookDepository.name);
   if (!bookBookDepository.name) {
     return res.send({});
   }
@@ -35,18 +34,22 @@ app.get("/books/:isbn", async (req, res) => {
     currency: bookBookDepository.currency,
     price: bookBookDepository.price,
   });
-  book.sources.push({
-    source: "Elephants",
-    url: bookElephants.url,
-    currency: bookElephants.currency,
-    price: bookElephants.price,
-  });
-  book.sources.push({
-    source: "Amazon",
-    url: bookAmazon.url,
-    currency: bookAmazon.currency,
-    price: bookAmazon.price,
-  });
+  if (bookElephants && bookElephants.url && bookElephants.price) {
+    book.sources.push({
+      source: "Elephants",
+      url: bookElephants.url,
+      currency: bookElephants.currency,
+      price: bookElephants.price,
+    });
+  }
+  if (bookAmazon && bookAmazon.url && bookAmazon.price) {
+    book.sources.push({
+      source: "Amazon",
+      url: bookAmazon.url,
+      currency: bookAmazon.currency,
+      price: bookAmazon.price,
+    });
+  }
   const { url, currency, price, ...bookOutput } = book;
   res.send(bookOutput);
 });
