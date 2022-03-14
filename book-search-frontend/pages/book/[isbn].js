@@ -55,12 +55,12 @@ export default function BookPage({ book }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {book.sources.map((source) => (
-                          <tr>
+                        {book.sources.map((source, idx) => (
+                          <tr key={idx}>
                             <td>{source.source}</td>
                             <td className={styles.price}>HKD${source.price}</td>
                             <td>
-                              <a href={source.url} target="_blank">
+                              <a href={source.url} target="_blank" rel="noreferrer">
                                 Purchase at {source.source}
                               </a>
                             </td>
@@ -79,7 +79,7 @@ export default function BookPage({ book }) {
               <h3>People who bought this also bought</h3>
               <div className={styles.relatedBookList}>
                 {book.isbnRecommendationBooks.map((book) => (
-                  <div className={styles.relatedBook}>
+                  <div key={book.isbn} className={styles.relatedBook}>
                     <Book book={book} />
                   </div>
                 ))}
@@ -92,7 +92,7 @@ export default function BookPage({ book }) {
               <h3>Recommended books in similar category</h3>
               <div className={styles.relatedBookList}>
                 {book.categoryRecommendationBooks.map((book) => (
-                  <div className={styles.relatedBook}>
+                  <div key={book.isbn} className={styles.relatedBook}>
                     <Book book={book} />
                   </div>
                 ))}
