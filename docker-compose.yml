@@ -1,0 +1,28 @@
+version: '3.7'
+
+networks:
+  sail:
+    driver: bridge
+
+services:
+  book-serch-frontend:
+    container_name: local-book-search-frontend
+    build:
+      context: ./book-search-frontend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - SERVER_URL=http://book-search-server:8000
+    networks:
+      - sail
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  book-search-server:
+    container_name: local-book-search-server
+    build:
+      context: ./book-search-server
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - sail
